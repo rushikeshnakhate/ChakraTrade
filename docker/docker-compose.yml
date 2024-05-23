@@ -1,0 +1,20 @@
+version: '3.1'
+services:
+  spark-master:
+    image: bde2020/spark-master:latest
+    container_name: spark-master
+    ports:
+      - "8080:8080"  # Spark Web UI
+      - "7077:7077"  # Spark Master Port
+    environment:
+      - INIT_DAEMON_STEP=setup_spark
+      - MASTER=local
+  spark-worker:
+    image: bde2020/spark-worker:latest
+    container_name: spark-worker
+    depends_on:
+      - spark-master
+    ports:
+      - "8081:8081"  # Spark Worker Web UI
+    environment:
+      - "SPARK_MASTER=spark://spark-master:7077"
