@@ -7,6 +7,7 @@ src_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 's
 sys.path.append(src_dir)
 
 from dataloader.dataSource import DataSourceFactory, DataSourceType, YahooFinanceDataSource, GoogleFinanceDataSource, JugaadDataSource
+from utils.config_manager import get_config_manager_singleton
 from datetime import date
 
 
@@ -28,11 +29,12 @@ class TestDataSourceFactory(unittest.TestCase):
         self.assertIsInstance(data_source, JugaadDataSource)
 
         start_date =date(2020,1,1)
-        download_path = os.getcwd()
-        generated_csv_filename = data_source.get_data(start_date, download_path)
-        self.assertTrue(os.path.exists(generated_csv_filename))
-        os.remove(generated_csv_filename)      
+        data_dir = get_config_manager_singleton().project.data_dir
 
+        generated_csv_filename = data_source.get_data(start_date, data_dir)       
+        self.assertTrue(os.path.exists(generated_csv_filename))
+        # os.remove(generated_csv_filename)      
+# 
     def test_invalid_data_source(self):
         factory = DataSourceFactory()
         with self.assertRaises(ValueError):

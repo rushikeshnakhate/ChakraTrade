@@ -1,11 +1,24 @@
-from .dataSource import DataSource
-from .dataSource import DataSourceFactory
-from .dataSource import DataSourceType
-from .dataHolder import DataHolder , DataHolderFactory
+import sys
+import os
+
+src_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'src'))
+sys.path.append(src_dir)
+
+
+from dataSource import DataSource
+from dataSource import DataSourceFactory
+from dataSource import DataSourceType
+from dataHolder import DataHolder , DataHolderFactory
+from utils.config_manager import get_config_manager_singleton
+
 import pickle
 import os
 from datetime import date
 from pathlib import Path
+import logging
+
+logging.basicConfig(level=logging.INFO)
+
 
 class DataCacheManager:
     @staticmethod
@@ -25,7 +38,9 @@ class DataCacheManager:
 
     @staticmethod
     def generate_cache_name(*args):
-        return "_".join(str(arg) for arg in args if not isinstance(arg, Path))
+        cache_file_name =  "_".join(str(arg) for arg in args if not isinstance(arg, Path))
+        data_dir = get_config_manager_singleton().project.data_dir
+        return os.path.join(data_dir, cache_file_name)
     
 
 class DataDownloader:
@@ -36,6 +51,7 @@ class DataDownloader:
     def get_data(self, *args ):
         cache_name = DataCacheManager.generate_cache_name(*args)
         data = DataCacheManager.load_from_cache(cache_name)
+        logging.info(f"cache_name={cache_name}") 
 
         if data is None:      
             data = self.data_source.get_data(*args)

@@ -1,7 +1,6 @@
 
 from abc import ABC, abstractmethod
 import yfinance as yf
-import pandas_datareader.data as web
 from datetime import datetime as dt
 from jugaad_data.nse import bhavcopy_save
 from enum import Enum

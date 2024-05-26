@@ -12,6 +12,8 @@ from dataloader.dataDownloader import DataDownloader
 from dataloader.dataDownloader import DataSourceType
 from dataloader.dataHolder import DataHolderType
 
+from utils.config_manager import get_config_manager_singleton
+
 class TestJugaadDataSource(unittest.TestCase):
     def test_get_data_returns_dataframe(self):
         # Create a DataDownloader instance
@@ -19,10 +21,12 @@ class TestJugaadDataSource(unittest.TestCase):
         
         # Set the start date and download path
         start_date = date(2020, 1, 1)
-        download_path = os.getcwd()
+        data_dir = get_config_manager_singleton().project.data_dir
         
+        print("data_dir={}".format(data_dir))
+
         # Call the get_data method
-        result = data_downloader.get_data(start_date, Path(download_path))
+        result = data_downloader.get_data(start_date, Path(data_dir))
                 
 
         # Assert that the result is not None

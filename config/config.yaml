@@ -1,0 +1,24 @@
+defaults:
+  - override hydra/job_logging: default
+  - override hydra/hydra_logging: default
+
+hydra:
+  run:
+    dir: ./outputs/${now:%Y-%m-%d}/${now:%H-%M-%S}
+  sweep:
+    dir: ./multirun/${now:%Y-%m-%d}/${now:%H-%M-%S}
+
+db:
+  driver: mysql
+  user: root
+  password: secret
+  database: testdb
+
+server:
+  host: localhost
+  port: 8080
+
+project:
+  project_name: Chakratrade
+  project_dir: D:\ChakraTrade
+  data_dir: D:\ChakraTrade\data
