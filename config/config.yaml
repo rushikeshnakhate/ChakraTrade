@@ -2,6 +2,10 @@ defaults:
   - override hydra/job_logging: default
   - override hydra/hydra_logging: default
 
+celery:
+  broker_url: redis://localhost:6379/0
+  backend: redis://localhost:6379/0
+
 hydra:
   run:
     dir: ./outputs/${now:%Y-%m-%d}/${now:%H-%M-%S}

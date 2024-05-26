@@ -33,7 +33,7 @@ class TestDataSourceFactory(unittest.TestCase):
 
         generated_csv_filename = data_source.get_data(start_date, data_dir)       
         self.assertTrue(os.path.exists(generated_csv_filename))
-        # os.remove(generated_csv_filename)      
+        os.remove(generated_csv_filename)      
 # 
     def test_invalid_data_source(self):
         factory = DataSourceFactory()
