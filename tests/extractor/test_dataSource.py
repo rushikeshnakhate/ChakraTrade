@@ -6,7 +6,7 @@ from datetime import datetime
 src_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'src'))
 sys.path.append(src_dir)
 
-from dataloader.dataSource import DataSourceFactory, DataSourceType, YahooFinanceDataSource, GoogleFinanceDataSource, JugaadDataSource
+from extractor.dataSource import DataSourceFactory, DataSourceType, YahooFinanceDataSource, GoogleFinanceDataSource, JugaadDataSource
 from utils.config_manager import get_config_manager_singleton
 from datetime import date
 

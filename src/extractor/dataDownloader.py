@@ -1,14 +1,14 @@
 import sys
 import os
 
-src_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'src'))
-sys.path.append(src_dir)
+# Ensure the project root directory is in sys.path
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
 
-
-from dataSource import DataSource
-from dataSource import DataSourceFactory
-from dataSource import DataSourceType
-from dataHolder import DataHolder , DataHolderFactory
+from extractor.dataSource import DataSourceFactory
+from extractor.dataSource import DataSourceType
+from extractor.dataHolder import DataHolder , DataHolderFactory
 from utils.config_manager import get_config_manager_singleton
 
 import pickle
