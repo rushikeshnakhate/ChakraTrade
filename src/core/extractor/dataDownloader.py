@@ -1,8 +1,8 @@
 import logging
 
-from src.plugIn.extractor.CacheManager import DataCacheManager
-from src.plugIn.extractor.dataHolder import DataHolderFactory, DataHolderType
-from src.plugIn.extractor.dataSource import DataSourceType, DataSourceFactory
+from src.core.extractor.CacheManager import DataCacheManager
+from src.core.extractor.dataHolder import DataHolderType, DataHolderFactory
+from src.core.extractor.dataSource import DataSourceType, DataSourceFactory
 
 logging.basicConfig(level=logging.INFO)
 

@@ -25,11 +25,11 @@ class ConfigManager(metaclass=Singleton):
     def config(self) -> DictConfig:
         """Returns the Hydra configuration object."""
         return self._cfg
-
-    @property
-    def resolved_config(self):
-        """Returns the resolved configuration."""
-        return OmegaConf.to_container(self.config, resolve=True)
+    #
+    # @property
+    # def resolved_config(self):
+    #     """Returns the resolved configuration."""
+    #     return OmegaConf.to_container(self.config, resolve=True)
 
 
 def get_config_manager_singleton(config_path=None, config_name="config"):

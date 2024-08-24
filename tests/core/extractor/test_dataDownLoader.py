@@ -1,14 +1,13 @@
 import unittest
 from datetime import date
 from pathlib import Path
-from pprint import pprint
 
 import pandas as pd
 
+from src.core.extractor.dataSource import DataSourceType
 from src.core.utils.config_manager import get_config_manager_singleton
-from src.plugIn.extractor.dataDownloader import DataDownloader
-from src.plugIn.extractor.dataHolder import DataHolderType
-from src.plugIn.extractor.dataSource import DataSourceType
+from src.core.extractor.dataDownloader import DataDownloader
+from src.core.extractor.dataHolder import DataHolderType
 
 
 class TestJugaadDataSource(unittest.TestCase):
