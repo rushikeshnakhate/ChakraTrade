@@ -36,7 +36,11 @@ class JugaadDataSource(DataSource):
 class DataSourceFactory:
     @staticmethod
     def get_data_source(source: DataSourceType) -> DataSource:
-        if source.value == DataSourceType.YAHOO.value:
+        if type(source) is not DataSourceType:
+            raise ValueError(
+                f"Unknown data source={source}, expected {DataSourceType.YAHOO}, {DataSourceType.GOOGLE} "
+                f"or {DataSourceType.JUGAAD}")
+        elif source.value == DataSourceType.YAHOO.value:
             return YahooFinanceDataSource()
         elif source.value == DataSourceType.GOOGLE.value:
             return GoogleFinanceDataSource()

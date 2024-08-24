@@ -9,7 +9,8 @@ hydra:
     dir: ./multirun/${now:%Y-%m-%d}/${now:%H-%M-%S}
 
 project:
-  project_name: PerformanceAnalysisForexExposure
-  project_dir: D:\PerformanceAnalysisForexExposure
-  data_dir: D:\PerformanceAnalysisForexExposure\data
-  plugins_dir: D:\PerformanceAnalysisForexExposure\src\plugin
+  project_name: ChakraTrade
+  project_dir: D:\ChakraTrade
+  data_dir: D:\ChakraTrade\data
+  test_data_dir: D:\ChakraTrade\tests\data
+  plugins_dir: D:\ChakraTrade\src\plugIn

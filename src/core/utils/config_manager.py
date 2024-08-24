@@ -1,11 +1,8 @@
-from pprint import pprint
-
 from hydra import initialize, compose
-from hydra.core import singleton
 from hydra.core.global_hydra import GlobalHydra
 from hydra.core.singleton import Singleton
 from hydra.errors import HydraException
-from omegaconf import DictConfig
+from omegaconf import DictConfig, OmegaConf
 
 
 class ConfigManager(metaclass=Singleton):
@@ -28,6 +25,11 @@ class ConfigManager(metaclass=Singleton):
     def config(self) -> DictConfig:
         """Returns the Hydra configuration object."""
         return self._cfg
+
+    @property
+    def resolved_config(self):
+        """Returns the resolved configuration."""
+        return OmegaConf.to_container(self.config, resolve=True)
 
 
 def get_config_manager_singleton(config_path=None, config_name="config"):
