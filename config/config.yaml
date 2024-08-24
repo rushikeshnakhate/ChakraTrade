@@ -2,27 +2,14 @@ defaults:
   - override hydra/job_logging: default
   - override hydra/hydra_logging: default
 
-celery:
-  broker_url: redis://localhost:6379/0
-  backend: redis://localhost:6379/0
-
 hydra:
   run:
     dir: ./outputs/${now:%Y-%m-%d}/${now:%H-%M-%S}
   sweep:
     dir: ./multirun/${now:%Y-%m-%d}/${now:%H-%M-%S}
 
-db:
-  driver: mysql
-  user: root
-  password: secret
-  database: testdb
-
-server:
-  host: localhost
-  port: 8080
-
 project:
-  project_name: Chakratrade
-  project_dir: D:\ChakraTrade
-  data_dir: D:\ChakraTrade\data
+  project_name: PerformanceAnalysisForexExposure
+  project_dir: D:\PerformanceAnalysisForexExposure
+  data_dir: D:\PerformanceAnalysisForexExposure\data
+  plugins_dir: D:\PerformanceAnalysisForexExposure\src\plugin

@@ -1,9 +1,8 @@
-
 from abc import ABC, abstractmethod
-import yfinance as yf
-from datetime import datetime as dt
-from jugaad_data.nse import bhavcopy_save
 from enum import Enum
+from pprint import pprint
+
+from jugaad_data.nse import bhavcopy_save
 
 
 class DataSourceType(Enum):
@@ -11,35 +10,39 @@ class DataSourceType(Enum):
     GOOGLE = 'google'
     JUGAAD = 'jugaad'
 
+
 class DataSource(ABC):
     @abstractmethod
     def get_data(self, *args):
         pass
-    
+
 
 class YahooFinanceDataSource(DataSource):
-    def get_data(self,func, *args):
+    def get_data(self, func, *args):
+        pprint(f"YahooFinanceDataSource.get_data({func}, {args})")
         return func(*args)
 
 
 class GoogleFinanceDataSource(DataSource):
-    def get_data(self, func , *args):
+    def get_data(self, func, *args):
         return func(*args)
 
 
 class JugaadDataSource(DataSource):
     def get_data(self, *args):
         return bhavcopy_save(*args)
-      
+
+
 class DataSourceFactory:
-    def get_DataSource(self, source: str) -> DataSource:
-        if source == DataSourceType.YAHOO:
+    @staticmethod
+    def get_data_source(source: DataSourceType) -> DataSource:
+        if source.value == DataSourceType.YAHOO.value:
             return YahooFinanceDataSource()
-        elif source == DataSourceType.GOOGLE:
+        elif source.value == DataSourceType.GOOGLE.value:
             return GoogleFinanceDataSource()
-        elif source == DataSourceType.JUGAAD:
+        elif source.value == DataSourceType.JUGAAD.value:
             return JugaadDataSource()
         else:
-            raise ValueError(f"Unknown data source={source}, expected {DataSourceType.YAHOO}, {DataSourceType.GOOGLE} or {DataSourceType.JUGAAD}")
-        
-
+            raise ValueError(
+                f"Unknown data source={source}, expected {DataSourceType.YAHOO}, {DataSourceType.GOOGLE} "
+                f"or {DataSourceType.JUGAAD}")

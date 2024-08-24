@@ -1,14 +1,15 @@
-from pyspark.sql import SparkSession
 import os
-import pickle
 from enum import Enum
+
 import pandas as pd
+from pyspark.sql import SparkSession
+
 
 class DataHolderType(Enum):
     PANDAS = "pandas"
     SPARK = "spark"
     HADOOP = "hadoop"
-    
+
 
 class DataHolder:
     def load_data(self, data):
@@ -16,7 +17,7 @@ class DataHolder:
 
 
 class PandaDataHolder(DataHolder):
- def load_data(self, data):
+    def load_data(self, data):
         if isinstance(data, pd.DataFrame):
             return data  # If data is already a DataFrame, return it directly
         elif os.path.exists(data):
@@ -33,7 +34,8 @@ class PandaDataHolder(DataHolder):
 
 
 class SparkDataHolder(DataHolder):
-    _spark = None  
+    _spark = None
+
     # Class-level variable to hold the Spark session    
     def load_data(self, data):
         if SparkDataHolder._spark is None:
@@ -61,13 +63,12 @@ class DataHolderFactory:
         if data_holder_type == DataHolderType.PANDAS:
             return PandaDataHolder()
         if data_holder_type == DataHolderType.SPARK:
-          return SparkDataHolder()
+            return SparkDataHolder()
         else:
-            raise ValueError(f"Unknown DataHolder={data_holder_type}, expected{DataHolderType.PANDAS.value} or {DataHolderType.SPARK.value}")
-        
+            raise ValueError(
+                f"Unknown DataHolder={data_holder_type}, expected{DataHolderType.PANDAS.value} or {DataHolderType.SPARK.value}")
 
 # # Register loaders
 # DataDownLoaderMethodFactory.register_loader(DataDownLoaderType.PANDAS, PandasLoader)
 # DataDownLoaderMethodFactory.register_loader(DataDownLoaderType.SPARK, SparkLoader)
 # DataDownLoaderMethodFactory.register_loader(DataDownLoaderType.HADOOP, HadoopLoader)
-

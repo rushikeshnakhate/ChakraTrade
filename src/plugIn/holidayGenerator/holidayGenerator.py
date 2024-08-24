@@ -26,11 +26,13 @@ class LSEHolidayGenerator(HolidayGenerator):
         # ...
         pass
 
+
 class NSEHolidayGenerator(HolidayGenerator):
     def generate_holidays(self, year):
         import pandas as pd
         from jugaad_data.holidays import holidays
         return pd.bdate_range(start=f'12/01/{year}', end=f'12/31/{year}', freq='C', holidays=holidays(year, 12))
+
 
 # Example usage
 generator = NYSEHolidayGenerator()
