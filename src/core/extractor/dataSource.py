@@ -1,8 +1,9 @@
 from abc import ABC, abstractmethod
 from enum import Enum
-from pprint import pprint
 
 from jugaad_data.nse import bhavcopy_save
+
+from src.core.utils.config_manager import get_config_manager_singleton
 
 
 class DataSourceType(Enum):
@@ -13,24 +14,28 @@ class DataSourceType(Enum):
 
 class DataSource(ABC):
     @abstractmethod
-    def get_data(self, *args):
+    def get_data(self, test_mode: bool = False, *args):
         pass
 
 
 class YahooFinanceDataSource(DataSource):
-    def get_data(self, func, *args):
-        pprint(f"YahooFinanceDataSource.get_data({func}, {args})")
-        return func(*args)
+    def get_data(self, test_mode: bool = False, *args):
+        pass
 
 
 class GoogleFinanceDataSource(DataSource):
-    def get_data(self, func, *args):
-        return func(*args)
+    def get_data(self, test_mode: bool = False, *args):
+        pass
 
 
 class JugaadDataSource(DataSource):
-    def get_data(self, *args):
-        return bhavcopy_save(*args)
+    def get_data(self, test_mode: bool = False, *args):
+        pass
+        data_dir = get_config_manager_singleton().project.test_data_dir if test_mode else get_config_manager_singleton().project.data_dir
+        bhavcopy_save(*args, data_dir)
+        # full_bhavcopy_save(source_date, directory)
+        # bhavcopy_fo_save(source_date, directory)
+        # bhavcopy_index_save(source_date, directory)
 
 
 class DataSourceFactory:

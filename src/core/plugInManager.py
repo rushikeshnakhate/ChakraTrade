@@ -1,6 +1,5 @@
-import os
 import importlib.util
-from pprint import pprint
+import os
 
 
 class PluginManager:

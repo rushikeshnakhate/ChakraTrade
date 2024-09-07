@@ -5,6 +5,7 @@ from pathlib import Path
 import pandas as pd
 
 from src.core.extractor.dataSource import DataSourceType
+from src.core.extractor.envType import EnvType
 from src.core.utils.config_manager import get_config_manager_singleton
 from src.core.extractor.dataDownloader import DataDownloader
 from src.core.extractor.dataHolder import DataHolderType
@@ -14,16 +15,14 @@ class TestJugaadDataSource(unittest.TestCase):
     def setUp(self):
         self.global_config = get_config_manager_singleton(config_path="../../../config", config_name="config")
         self.test_data_dir = self.global_config.project.test_data_dir
+        data_name = "bhav_data"
+        self.data_downloader = DataDownloader(env_type=EnvType.Test, data_name=data_name, source=DataSourceType.JUGAAD,
+                                              data_holder=DataHolderType.PANDAS)
 
     def test_get_data_returns_dataframe(self):
-        # Create a DataDownloader instance
-        data_downloader = DataDownloader(source=DataSourceType.JUGAAD, data_holder=DataHolderType.PANDAS)
-
-        # Set the start date and download path
         start_date = date(2020, 1, 1)
 
-        # Call the get_data method
-        result = data_downloader.get_data(start_date, Path(self.test_data_dir), test_mode=True)
+        result = self.data_downloader.get_data(start_date)
 
         # Assert that the result is not None
         self.assertIsNotNone(result)
@@ -41,15 +40,14 @@ class TestJugaadDataSource(unittest.TestCase):
 
     def test_get_data_caches_result_from_cache(self):
         # Create a DataDownloader instance
-        data_downloader = DataDownloader(source=DataSourceType.JUGAAD, data_holder=DataHolderType.PANDAS)
         # Set the start date and download path
         start_date = date(2020, 1, 2)
         # Call the get_data method twice
-        result1 = data_downloader.get_data(start_date, Path(self.test_data_dir), test_mode=True)
+        result1 = self.data_downloader.get_data(start_date)
         # Set the start date and download path
         start_date = date(2020, 1, 2)
         # Call the get_data method twice
-        result2 = data_downloader.get_data(start_date, Path(self.test_data_dir), test_mode=True)
+        result2 = self.data_downloader.get_data(start_date)
         # Compare the two results and print which rows are different
         self.assertTrue(result1.equals(result2))
 

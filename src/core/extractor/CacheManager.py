@@ -1,11 +1,13 @@
 import os
 import pickle
 from pathlib import Path
+from pprint import pprint
 
 from src.core.utils.config_manager import get_config_manager_singleton
 
 
 class DataCacheManager:
+
     @staticmethod
     def load_from_cache(cache_name: str):
         cache_file = f"{cache_name}.pkl"
@@ -25,5 +27,6 @@ class DataCacheManager:
     def generate_cache_name(*args, test_mode=False):
         cache_file_name = "_".join(str(arg) for arg in args if not isinstance(arg, Path))
         cache_file_name += ".pkl"
+        print("cache_file_name={}".format(cache_file_name))
         data_dir = get_config_manager_singleton().project.test_data_dir if test_mode else get_config_manager_singleton().project.data_dir
         return os.path.join(data_dir, cache_file_name)
